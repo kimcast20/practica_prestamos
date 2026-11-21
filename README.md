@@ -39,3 +39,13 @@ Porque los botones solo controlan lo que se muestra en la interfaz, pero los mé
 **2. ¿Qué hace prestamo.linea_ids.equipo_id.write(...)? ¿Por qué no hace falta un for para cada equipo?**
 
 Permite modificar el estado de todos los equipos relacionados con las líneas del préstamo. No hace falta un ciclo for porque Odoo permite ejecutar write() directamente sobre varios registros al mismo tiempo.
+
+### Paso 5. Reglas del préstamo
+
+**1. El campo equipo_id ya filtra los equipos disponibles. ¿Por qué hace falta el TODO 5?**
+
+Porque el filtro solamente muestra los equipos disponibles al momento de seleccionarlos. Sin embargo, su estado podría cambiar antes de confirmar el préstamo. Por eso es necesario volver a verificar que el equipo siga disponible cuando se pulsa el botón Prestar.
+
+**2. ¿En qué momento se ejecuta un método con @api.constrains? ¿Y la validación de action_prestar?**
+
+Un método con @api.constrains se ejecuta cuando se modifican o guardan los campos indicados en la restricción. En cambio, las validaciones de action_prestar se ejecutan cuando el usuario pulsa el botón Prestar.
