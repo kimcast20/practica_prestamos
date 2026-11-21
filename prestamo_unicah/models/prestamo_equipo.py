@@ -1,68 +1,47 @@
-from odoo import models, fields, api
+from odoo import fields, models
 
 
 class PrestamoEquipo(models.Model):
-    _name = 'prestamo.equipo'
-    _description = 'Equipo disponible para préstamo'
-    _rec_name = 'name'
-    _order = 'name'
+    _name = "prestamo.equipo"
+    _description = "Equipo para préstamo"
 
     name = fields.Char(
-        string='Nombre del equipo',
+        string="Nombre",
         required=True
     )
 
     codigo = fields.Char(
-        string='Código',
+        string="Código de inventario",
         required=True,
         copy=False
     )
 
-    tipo = fields.Selection(
+    categoria = fields.Selection(
         [
-            ('laptop', 'Laptop'),
-            ('desktop', 'Computadora de escritorio'),
-            ('proyector', 'Proyector'),
-            ('tablet', 'Tablet'),
-            ('otro', 'Otro'),
+            ("laptop", "Laptop"),
+            ("proyector", "Proyector"),
+            ("audio", "Audio"),
+            ("laboratorio", "Laboratorio"),
         ],
-        string='Tipo de equipo',
-        required=True
+        string="Categoría",
+        required=True,
+        default="laptop",
     )
-
-    marca = fields.Char(string='Marca')
-    modelo = fields.Char(string='Modelo')
-    numero_serie = fields.Char(string='Número de serie')
 
     estado = fields.Selection(
         [
-            ('disponible', 'Disponible'),
-            ('prestado', 'Prestado'),
-            ('mantenimiento', 'En mantenimiento'),
-            ('baja', 'Dado de baja'),
+            ("disponible", "Disponible"),
+            ("prestado", "Prestado"),
+            ("mantenimiento", "En mantenimiento"),
         ],
-        string='Estado',
-        default='disponible',
-        required=True
+        string="Estado",
+        required=True,
+        default="disponible",
     )
 
-    fecha_adquisicion = fields.Date(
-        string='Fecha de adquisición'
-    )
-
-    observaciones = fields.Text(
-        string='Observaciones'
-    )
+    notas = fields.Text(string="Notas")
 
     active = fields.Boolean(
-        string='Activo',
+        string="Activo",
         default=True
     )
-
-    _sql_constraints = [
-        (
-            'codigo_equipo_unique',
-            'UNIQUE(codigo)',
-            'El código del equipo debe ser único.'
-        ),
-    ]

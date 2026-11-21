@@ -1,20 +1,16 @@
+
 {
-    'name': 'Gestión de Préstamo de Equipo',
-    'version': '1.0',
-    'summary': 'Administración de préstamos de equipo',
-    'description': """
-        Módulo para gestionar equipos y sus préstamos.
-    """,
-    'category': 'Operations',
-    'author': 'UNICAH',
-    'license': 'LGPL-3',
-    'depends': ['base', 'mail'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/prestamo_equipo_views.xml',
-        'views/prestamo_prestamo_views.xml',
-        'views/res_partner_views.xml',
+    "name": "Préstamo de equipo UNICAH",
+    "version": "1.0",
+    "summary": "Control de préstamos de equipo de la universidad",
+    "category": "Services",
+    "author": "Kimberly Yamileth Castro Moreno",
+    "depends": ["mail"],
+    "data": [
+        "security/ir.access.csv",
+        "data/prestamo_equipo_data.xml",
+        "views/prestamo_equipo_views.xml",
     ],
-    'installable': True,
-    'application': True,
+    "application": True,
+    "license": "LGPL-3",
 }
