@@ -24,6 +24,13 @@
                     <button name="action_devolver" string="Devolver" type="object"
                             class="btn-primary"
                             invisible="state not in ('prestado', 'atrasado')"/>
+                    
+                    <button name="action_marcar_atrasado"
+                            string="Marcar atrasado"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'prestado'"/>
+
                     <field name="state" widget="statusbar"
                         statusbar_visible="borrador,prestado,devuelto"/>
                 </header>
@@ -60,6 +67,32 @@
             </form>
         </field>
     </record>
+
+
+    <record id="prestamo_prestamo_view_search" model="ir.ui.view">
+        <field name="name">prestamo.prestamo.search</field>
+        <field name="model">prestamo.prestamo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+
+                <filter name="activos" string="Activos"
+                        domain="[('state', 'in', ['prestado', 'atrasado'])]"/>
+
+                <filter name="atrasados" string="Atrasados"
+                        domain="[('state', '=', 'atrasado')]"/>
+
+                <group>
+                    <filter name="group_by_state" string="Estado"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_by_partner" string="Solicitante"
+                            context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
 
     <record id="prestamo_prestamo_action" model="ir.actions.act_window">
         <field name="name">Préstamos</field>
