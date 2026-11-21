@@ -1,47 +1,18 @@
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 
 
 class PrestamoLinea(models.Model):
-    _name = 'prestamo.linea'
-    _description = 'Detalle de equipos prestados'
+    _name = "prestamo.linea"
+    _description = "Equipo del préstamo"
 
     prestamo_id = fields.Many2one(
-        'prestamo.prestamo',
-        string='Préstamo',
-        required=True,
-        ondelete='cascade'
+        "prestamo.prestamo", string="Préstamo", required=True, ondelete="cascade"
     )
-
     equipo_id = fields.Many2one(
-        'prestamo.equipo',
-        string='Equipo',
-        required=True
+        "prestamo.equipo",
+        string="Equipo",
+        required=True,
+        domain="[('estado', '=', 'disponible')]",
     )
-
-    cantidad = fields.Integer(
-        string='Cantidad',
-        default=1,
-        required=True
-    )
-
-    observaciones = fields.Char(
-        string='Observaciones'
-    )
-
-    @api.constrains('cantidad')
-    def _check_cantidad(self):
-        for record in self:
-            if record.cantidad <= 0:
-                raise ValidationError(
-                    'La cantidad debe ser mayor que cero.'
-                )
-
-    _sql_constraints = [
-        (
-            'equipo_prestamo_unique',
-            'UNIQUE(prestamo_id, equipo_id)',
-            'No se puede agregar el mismo equipo dos veces '
-            'en un préstamo.'
-        ),
-    ]
+    categoria = fields.Selection(related="equipo_id.categoria", string="Categoría")
+    observacion = fields.Char(string="Observación")
