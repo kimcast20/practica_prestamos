@@ -29,3 +29,13 @@ El primer parámetro, prestamo.linea, indica el modelo relacionado que contiene 
 **2. ¿Qué pasa con las líneas cuando se borra un préstamo? ¿Qué parte del código lo define?**
 
 Las líneas del préstamo se eliminan automáticamente cuando se borra el préstamo al que pertenecen. Esto se define mediante ondelete="cascade" en el campo prestamo_id del modelo prestamo_linea.py.
+
+### Paso 4. Flujo de estados
+
+**1. Los botones ya se ocultan según el estado. ¿Por qué los métodos vuelven a validar el estado?**
+
+Porque los botones solo controlan lo que se muestra en la interfaz, pero los métodos también deben validar que la operación sea correcta. Así se evita que un préstamo cambie de estado de manera incorrecta.
+
+**2. ¿Qué hace prestamo.linea_ids.equipo_id.write(...)? ¿Por qué no hace falta un for para cada equipo?**
+
+Permite modificar el estado de todos los equipos relacionados con las líneas del préstamo. No hace falta un ciclo for porque Odoo permite ejecutar write() directamente sobre varios registros al mismo tiempo.
